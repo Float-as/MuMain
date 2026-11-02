@@ -325,6 +325,7 @@ mu::ui::window::COptionWindow::COptionWindow()
     m_bDisableBoids = GameConfig::GetInstance().GetDisableBoids();
     m_bDisableWingShadow = GameConfig::GetInstance().GetDisableWingShadow();
     m_bDisableBodyShadows = GameConfig::GetInstance().GetDisableBodyShadows();
+    m_bDisableScreenShake = GameConfig::GetInstance().GetDisableScreenShake();
 
     m_iThemeIndex = -1;
     m_iTexturePackIndex = 0;
@@ -431,6 +432,8 @@ void mu::ui::window::COptionWindow::BindRmlModel(Rml::DataModelConstructor& c, O
     c.Bind("disable_wing_shadow_label", &model.disableWingShadowLabel);
     c.Bind("disable_body_shadows", &model.disableBodyShadows);
     c.Bind("disable_body_shadows_label", &model.disableBodyShadowsLabel);
+    c.Bind("disable_screen_shake", &model.disableScreenShake);
+    c.Bind("disable_screen_shake_label", &model.disableScreenShakeLabel);
     c.Bind("skill_effect_models_locked", &model.skillEffectModelsLocked);
     c.Bind("boids_locked", &model.boidsLocked);
     c.Bind("body_shadows_locked", &model.bodyShadowsLocked);
@@ -566,6 +569,8 @@ void mu::ui::window::COptionWindow::BindRmlModel(Rml::DataModelConstructor& c, O
         [this](Rml::DataModelHandle, Rml::Event&, const Rml::VariantList&) { RmlToggleDisableWingShadow(); });
     c.BindEventCallback("option_toggle_disable_body_shadows",
         [this](Rml::DataModelHandle, Rml::Event&, const Rml::VariantList&) { RmlToggleDisableBodyShadows(); });
+    c.BindEventCallback("option_toggle_disable_screen_shake",
+        [this](Rml::DataModelHandle, Rml::Event&, const Rml::VariantList&) { RmlToggleDisableScreenShake(); });
     c.BindEventCallback("option_toggle_enhanced_graphics",
                         [this](Rml::DataModelHandle, Rml::Event&, const Rml::VariantList&)
                         { RmlToggleEnhancedGraphics(); });
@@ -794,6 +799,7 @@ void mu::ui::window::COptionWindow::OpenningProcess()
     m_bDisableBoids = GameConfig::GetInstance().GetDisableBoids();
     m_bDisableWingShadow = GameConfig::GetInstance().GetDisableWingShadow();
     m_bDisableBodyShadows = GameConfig::GetInstance().GetDisableBodyShadows();
+    m_bDisableScreenShake = GameConfig::GetInstance().GetDisableScreenShake();
 
     RefreshThemeChoices();
     m_iUIScaleIndex = FindCurrentUIScaleIndex();
@@ -1094,6 +1100,17 @@ void mu::ui::window::COptionWindow::RmlToggleDisableBodyShadows()
     m_bDisableBodyShadows = !m_bDisableBodyShadows;
     SetDisableBodyShadows(m_bDisableBodyShadows);
     GameConfig::GetInstance().SetDisableBodyShadows(m_bDisableBodyShadows);
+    GameConfig::GetInstance().Save();
+}
+
+void mu::ui::window::COptionWindow::RmlToggleDisableScreenShake()
+{
+    m_bDisableScreenShake = !m_bDisableScreenShake;
+
+    GameConfig::GetInstance().SetDisableScreenShake(
+        m_bDisableScreenShake
+    );
+
     GameConfig::GetInstance().Save();
 }
 
@@ -1741,6 +1758,7 @@ void mu::ui::window::COptionWindow::SyncRmlModel()
     SyncLabel(model.disableBoidsLabel, "disable_boids_label", I18N::Game::DisableAmbientWildlife);
     SyncLabel(model.disableWingShadowLabel, "disable_wing_shadow_label", I18N::Game::DisableWingShadow);
     SyncLabel(model.disableBodyShadowsLabel, "disable_body_shadows_label", I18N::Game::DisableShadows);
+    SyncLabel(model.disableScreenShakeLabel, "disable_screen_shake_label", I18N::Game::DisableScreenShake);
     SyncLabel(model.enhancedGraphicsLabel, "enhanced_graphics_label", I18N::Game::EnhancedGraphics);
     SyncLabel(model.lookLightingLabel, "look_lighting_label", I18N::Game::EnhancedLighting);
     SyncLabel(model.lookDynamicLightsLabel, "look_dynamic_lights_label", I18N::Game::DynamicLights);
@@ -1929,4 +1947,6 @@ void mu::ui::window::COptionWindow::SyncRmlModel()
     }
     syncDropdownValue(model.texturePackValueLabel, "texture_pack_value_label", model.texturePackLabels,
                       model.texturePackIndex);
+
+    if (model.disableScreenShake != m_bDisableScreenShake) { model.disableScreenShake = m_bDisableScreenShake; m_RmlView.MarkDirty("disable_screen_shake"); }
 }

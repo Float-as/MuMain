@@ -177,6 +177,7 @@ namespace mu::ui::window
         void RmlToggleDisableBoids();
         void RmlToggleDisableWingShadow();
         void RmlToggleDisableBodyShadows();
+        void RmlToggleDisableScreenShake();
         // The look preset is read live (SyncRmlModel), since `$look classic|enhanced` changes it
         // outside this window too.
         void RmlToggleEnhancedGraphics();
@@ -329,6 +330,8 @@ namespace mu::ui::window
             Rml::String disableWingShadowLabel;
             bool disableBodyShadows = false;
             Rml::String disableBodyShadowsLabel;
+            bool disableScreenShake = false;
+            Rml::String disableScreenShakeLabel;
             // A row another setting already covers shows ticked and ignores clicks: Disable Effects
             // skips skill effect models and wildlife; without full effects, or with every body
             // shadow off, no wing shadow is drawn either.
@@ -465,6 +468,7 @@ namespace mu::ui::window
         bool m_bDisableBoids;
         bool m_bDisableWingShadow;
         bool m_bDisableBodyShadows;
+        bool m_bDisableScreenShake;
 
         // Interface/UI tab -- selection indexes the displayed theme snapshot.
         // Show FPS Counter/Show Debug Info need no members -- SyncRmlModel()

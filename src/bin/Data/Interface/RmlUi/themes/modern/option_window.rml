@@ -396,6 +396,12 @@
 						<span class="opt-label">{{slide_help_label}}</span>
 						<div class="opt-control"><div class="opt-toggle" data-class-checked="slide_help"><div class="opt-toggle-knob"></div></div></div>
 					</div>
+					<div class="option-row option-checkbox-row" data-event-click="option_toggle_disable_screen_shake">
+						<span class="option-row-label">{{disable_screen_shake_label}}</span>
+						<div class="checkbox-box" data-class-checked="disable_screen_shake">
+							<div class="checkbox-tick"></div>
+						</div>
+					</div>
 				</div>
 
 				<div class="opt-page" data-class-hidden="active_tab != 4">

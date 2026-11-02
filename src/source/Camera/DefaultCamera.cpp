@@ -12,21 +12,22 @@
 #include "DefaultCamera.h"
 #include "CameraManager.h"
 #include "CameraProjection.h"
+#include "CameraDebugLog.h"
+#include "Camera/CameraMove.h"
 #include "Scenes/SceneCore.h"
 #include "Engine/Object/ZzzInterface.h"
-#include "Render/Textures/ZzzOpenglUtil.h"
-#include "Render/Renderer/MuRenderer.h"
 #include "Engine/Object/ZzzObject.h"
 #include "Engine/Object/ZzzCharacter.h"
 #include "Render/Terrain/ZzzLodTerrain.h"
-#include "World/MapInfra/MapManager.h"
-#include "Camera/CameraMove.h"
-#include "UI/Core/WindowSystem.h"
-#include "GameLogic/Events/Cinematic/CDirection.h"
-#include "World/MapInfra/w_MapHeaders.h"
-#include "UI/Core/UIManager.h"
-#include "CameraDebugLog.h"
 #include "Render/Text/CUIRenderText.h"
+#include "Render/Textures/ZzzOpenglUtil.h"
+#include "Render/Renderer/MuRenderer.h"
+#include "World/MapInfra/MapManager.h"
+#include "World/MapInfra/w_MapHeaders.h"
+#include "UI/Core/WindowSystem.h"
+#include "UI/Core/UIManager.h"
+#include "GameLogic/Events/Cinematic/CDirection.h"
+#include "Data/GameConfig/GameConfig.h"
 
 // External variable declarations
 extern short g_shCameraLevel;
@@ -666,10 +667,16 @@ void DefaultCamera::SetCameraAngle()
 
     // Effects roll a new shake every rendered frame; take one per reference frame, as at 25 FPS.
     static float s_earthQuake = 0.f;
-    if (REFERENCE_FRAME_STEP > 0)
+
+    if (GameConfig::GetInstance().GetDisableScreenShake())
+    {
+        s_earthQuake = 0.f;
+    }
+    else if (REFERENCE_FRAME_STEP > 0)
     {
         s_earthQuake = EarthQuake;
     }
+
     m_State.Angle[0] += s_earthQuake;
 }
 

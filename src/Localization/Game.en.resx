@@ -1264,6 +1264,9 @@
   <data name="Disable Particles" xml:space="preserve">
     <value>Disable Particles</value>
   </data>
+  <data name="Disable Screen Shake" xml:space="preserve">
+    <value>Disable screen shake</value>
+  </data>
   <data name="Disable Skill Effect Models" xml:space="preserve">
     <value>Disable Skill Effects</value>
   </data>

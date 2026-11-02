@@ -111,6 +111,7 @@ void GameConfig::Load()
     m_disableBoids = ReadBool(CfgSectionRender, CfgKeyDisableBoids, CfgDefaultDisableBoids);
     m_disableWingShadow = ReadBool(CfgSectionRender, CfgKeyDisableWingShadow, CfgDefaultDisableWingShadow);
     m_disableBodyShadows = ReadBool(CfgSectionRender, CfgKeyDisableBodyShadows, CfgDefaultDisableBodyShadows);
+    m_disableScreenShake = ReadBool(CfgSectionRender, CfgKeyDisableScreenShake, CfgDefaultDisableScreenShake);
     m_fpsCap = ReadInt(CfgSectionRender, CfgKeyFpsCap, CfgDefaultFpsCap);
     m_texturePack = ReadString(CfgSectionRender, CfgKeyTexturePack, CfgDefaultTexturePack);
 
@@ -174,6 +175,7 @@ void GameConfig::Save()
     WriteBool(CfgSectionRender, CfgKeyDisableBoids, m_disableBoids);
     WriteBool(CfgSectionRender, CfgKeyDisableWingShadow, m_disableWingShadow);
     WriteBool(CfgSectionRender, CfgKeyDisableBodyShadows, m_disableBodyShadows);
+    WriteBool(CfgSectionRender, CfgKeyDisableScreenShake, m_disableScreenShake);
     WriteInt(CfgSectionRender, CfgKeyFpsCap, m_fpsCap);
     WriteString(CfgSectionRender, CfgKeyTexturePack, m_texturePack);
 }
@@ -293,6 +295,11 @@ void GameConfig::SetDisableWingShadow(bool disabled)
 void GameConfig::SetDisableBodyShadows(bool disabled)
 {
     m_disableBodyShadows = disabled;
+}
+
+void GameConfig::SetDisableScreenShake(bool disabled)
+{
+    m_disableScreenShake = disabled;
 }
 
 void GameConfig::SetFpsCap(int fps)
